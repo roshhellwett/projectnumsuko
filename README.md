@@ -33,3 +33,12 @@ git clone https://github.com/roshhellwett/Numsuko.git
 cd Numsuko
 gcc main.c game.c -o numsuko   # adjust filenames if different
 ./numsuko
+
+```
+
+---
+
+© 2026 [Zenith Open Source Projects](https://zenithprojects.up.railway.app/). All Rights Reserved.  
+Zenith is a Open Source Project Idea's by @roshhellwett
+
+---
