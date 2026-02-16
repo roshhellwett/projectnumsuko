@@ -1,4 +1,4 @@
-# Numsuko 🎲
+# Project Numsuko 🎲
 
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 ![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)
