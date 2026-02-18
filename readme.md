@@ -1,44 +1,55 @@
-# Project Numsuko 🎲
+![Repo Size](https://img.shields.io/github/repo-size/roshhellwett/Numsuko?style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/roshhellwett/Numsuko?style=for-the-badge)
+![Forks](https://img.shields.io/github/forks/roshhellwett/Numsuko?style=for-the-badge)
+![Issues](https://img.shields.io/github/issues/roshhellwett/Numsuko?style=for-the-badge)
+![C/C++](https://img.shields.io/badge/Language-C%2FC%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B)
 
-[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
-![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)
-![Status](https://img.shields.io/badge/Status-Active-success)
-![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen)
-![GitHub stars](https://img.shields.io/github/stars/roshhellwett/Numsuko?style=social)
+# PROJECT NUMSUKO
 
-**Numsuko** is a simple command-line number guessing game written in C.  
-It challenges the user to guess a randomly-generated number within a limited number of attempts, offering a fun interactive experience in a terminal environment.
-
----
-
-## 🎮 Features
-- CLI-based number guessing game  
-- Random number generation each time you play  
-- Limited attempts to make the game exciting  
-- Clear print-out of guesses, remaining tries, and success/fail messages  
-- Lightweight and portable — runs on standard terminals  
-
----
-The files are organized so that the `main.c` handles logic flow, while `game.c`/`game.h` contain the game functions.
+Numsuko is a lightweight, command-line number guessing game written in C/C++. It challenges users to guess a randomly-generated number within a strict limit of attempts, offering a highly interactive and engaging experience natively within the terminal environment.
 
 ---
 
-## 🚀 Getting Started
-### Prerequisites
-You’ll need a C compiler (e.g., `gcc`) and a terminal (Linux or compatible).
+## ✨ Key Features
 
-### Build & Run
+### 🎮 Gameplay Mechanics
+* **Dynamic Difficulty Levels:** Choose your challenge: Easy (1-10, 5 chances), Medium (1-20, 10 chances), or Hard (1-100, 10 chances).
+* **Randomized Generation:** Uses time-seeded random number generation for a unique, unpredictable experience every session.
+* **Interactive Feedback:** Provides real-time "Too High" or "Too Low" hints while tracking your remaining attempts.
+* **Infinite Replayability:** Seamless continuous game loop allowing players to instantly replay without restarting the executable.
+
+### ⚡ Core Functionality
+* **Lightweight Execution:** Highly optimized CLI utility that runs natively on standard terminals with minimal overhead.
+* **Cross-Platform Compatibility:** Pure standard library implementation (`<stdio.h>`, `<stdlib.h>`, `<time.h>`), easily compilable on Linux, Windows, or macOS.
+
+## 🛠️ Prerequisites
+
+To build and run Numsuko, you will need:
+* **C/C++ Compiler:** GCC, Clang, or MSVC.
+* **Terminal:** Any standard command-line interface or terminal emulator.
+
+## 🚀 Build Instructions
+
+Follow these steps to build Numsuko from source:
+
 ```bash
-git clone https://github.com/roshhellwett/Numsuko.git
-cd Numsuko
-gcc main.c game.c -o numsuko   # adjust filenames if different
-./numsuko
-
+   git clone [https://github.com/roshhellwett/Numsuko.git](https://github.com/roshhellwett/Numsuko.git)
+   cd Numsuko
 ```
 
 ---
 
+# 📂 Project Structure
+```
+Numsuko/
+├── .github/workflows/
+│   └── cmake-single-platform.yml # CI/CD build configuration
+├── Numsuko.exe                   # Pre-compiled Windows executable
+├── main.cpp                      # Core game logic and application entry point
+├── LICENSE                       # Open source license documentation
+├── security.md                   # Security and vulnerability details
+└── readme.md                     # Project documentation
+```
+
 © 2026 [Zenith Open Source Projects](https://zenithopensourceprojects.vercel.app/). All Rights Reserved.  
 Zenith is a Open Source Project Idea's by @roshhellwett
-
----
