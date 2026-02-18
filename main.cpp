@@ -2,14 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-
-#ifdef _WIN32
 #include <windows.h>
-#define delay(ms) Sleep(ms)
-#else
-#include <unistd.h>
-#define delay(ms) usleep((ms) * 1000)
-#endif
 
 #define RED "\033[31m"
 #define GREEN "\033[32m"
@@ -30,11 +23,7 @@ typedef struct {
 } Stats;
 
 void clearScreen() {
-#ifdef _WIN32
     system("cls");
-#else
-    printf("\033[2J\033[1;1H");
-#endif
 }
 
 void printBanner() {
@@ -55,30 +44,34 @@ void printBanner() {
 
 void printBox(const char* title) {
     int len = strlen(title);
-    printf(BOLD BLUE "╔");
-    for (int i = 0; i < len + 2; i++) printf("═");
-    printf("╗\n");
-    printf("║ " BOLD CYAN "%s" RESET BLUE " ║\n", title);
-    printf("╚");
-    for (int i = 0; i < len + 2; i++) printf("═");
-    printf("╝\n" RESET);
+    printf(BOLD BLUE "+");
+    for (int i = 0; i < len + 2; i++) printf("-");
+    printf("+\n");
+    printf("| " BOLD CYAN "%s" RESET BLUE " |\n", title);
+    printf("+");
+    for (int i = 0; i < len + 2; i++) printf("-");
+    printf("+\n" RESET);
 }
 
 void printStats(Stats* stats) {
-    printf(BOLD YELLOW "\n═══════════════════════════════════════\n");
-    printf("           📊 GAME STATISTICS 📊\n");
-    printf("═══════════════════════════════════════\n" RESET);
-    printf("  🎮  Games Played : " BOLD "%d\n" RESET, stats->gamesPlayed);
-    printf("  ✅  Games Won    : " GREEN "%d\n" RESET, stats->gamesWon);
-    printf("  ❌  Games Lost   : " RED "%d\n" RESET, stats->gamesLost);
-    printf("  🔥 Current Streak: " YELLOW "%d\n" RESET, stats->currentStreak);
-    printf("  ⭐  Best Streak   : " GREEN "%d\n" RESET, stats->bestStreak);
-    printf("  🏆  Total Score   : " CYAN "%d\n" RESET, stats->totalScore);
+    printf(BOLD YELLOW "\n========================================\n");
+    printf("           == GAME STATISTICS ==\n");
+    printf("========================================\n" RESET);
+    printf("  Games Played : " BOLD "%d\n" RESET, stats->gamesPlayed);
+    printf("  Games Won    : " GREEN "%d\n" RESET, stats->gamesWon);
+    printf("  Games Lost   : " RED "%d\n" RESET, stats->gamesLost);
+    printf("  Current Streak: " YELLOW "%d\n" RESET, stats->currentStreak);
+    printf("  Best Streak   : " GREEN "%d\n" RESET, stats->bestStreak);
+    printf("  Total Score   : " CYAN "%d\n" RESET, stats->totalScore);
     if (stats->gamesPlayed > 0) {
         float winRate = (float)stats->gamesWon / stats->gamesPlayed * 100;
-        printf("  📈  Win Rate      : " BOLD "%.1f%%\n" RESET, winRate);
+        printf("  Win Rate      : " BOLD "%.1f%%\n" RESET, winRate);
     }
-    printf(BOLD YELLOW "═══════════════════════════════════════\n" RESET);
+    printf(BOLD YELLOW "========================================\n" RESET);
+}
+
+void delay(int milliseconds) {
+    Sleep(milliseconds);
 }
 
 void celebratoryAnimation() {
@@ -86,7 +79,7 @@ void celebratoryAnimation() {
     const char* colors[] = {RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN};
     for (int round = 0; round < 2; round++) {
         for (int i = 0; i < 6; i++) {
-            printf("%s★ ", colors[i]);
+            printf("%s* ", colors[i]);
             fflush(stdout);
             delay(100);
         }
@@ -96,15 +89,15 @@ void celebratoryAnimation() {
 
 void printMenu() {
     printf(BOLD "\n");
-    printf("  ╔═══════════════════════════════╗\n");
-    printf("  ║      🎯 SELECT DIFFICULTY     ║\n");
-    printf("  ╠═══════════════════════════════╣\n");
-    printf("  ║  " GREEN "1." RESET " EASY   → 1-10, 5 chances   ║\n");
-    printf("  ║  " YELLOW "2." RESET " MEDIUM → 1-20, 10 chances  ║\n");
-    printf("  ║  " RED "3." RESET " HARD   → 1-100, 10 chances  ║\n");
-    printf("  ║  " CYAN "4." RESET " SHOW STATISTICS         ║\n");
-    printf("  ║  " MAGENTA "5." RESET " QUIT GAME              ║\n");
-    printf("  ╚═══════════════════════════════╝\n" RESET);
+    printf("  +===================================+\n");
+    printf("  |      SELECT DIFFICULTY           |\n");
+    printf("  +===================================+\n");
+    printf("  |  " GREEN "1." RESET " EASY   -> 1-10, 5 chances   |\n");
+    printf("  |  " YELLOW "2." RESET " MEDIUM -> 1-20, 10 chances  |\n");
+    printf("  |  " RED "3." RESET " HARD   -> 1-100, 10 chances  |\n");
+    printf("  |  " CYAN "4." RESET " SHOW STATISTICS         |\n");
+    printf("  |  " MAGENTA "5." RESET " QUIT GAME              |\n");
+    printf("  +===================================+\n" RESET);
     printf(BOLD CYAN "\n  Enter your choice: " RESET);
 }
 
@@ -128,13 +121,13 @@ void giveHint(int guess, int target, int attempt, int maxAttempts) {
     
     printf(BOLD);
     if (diff <= 3) {
-        printf(YELLOW "  🔥 BURNING HOT! " RESET);
+        printf(YELLOW "  *** BURNING HOT! *** " RESET);
     } else if (diff <= 7) {
-        printf(CYAN "  ♨️  WARM " RESET);
+        printf(CYAN "  ~~ WARM ~~ " RESET);
     } else if (diff <= 15) {
-        printf(BLUE "  ❄️  COLD " RESET);
+        printf(BLUE "  . COLD . " RESET);
     } else {
-        printf(RED "  🥶 FREEZING! " RESET);
+        printf(RED "  >>> FREEZING! <<< " RESET);
     }
     
     if (target % 2 == 0) {
@@ -150,10 +143,12 @@ int main() {
     int guess, chances, choose, max, min, random_number;
     char choice;
     
+    SetConsoleOutputCP(CP_UTF8);
+    
     srand(time(NULL));
     
     printBanner();
-    printf(BOLD GREEN "  Welcome to NUMSUKO! 🎲\n" RESET);
+    printf(BOLD GREEN "  Welcome to NUMSUKO!\n" RESET);
     printf("  Can you guess the secret number?\n");
     delay(1500);
     
@@ -162,7 +157,7 @@ int main() {
         printMenu();
         
         if (!getValidInput(&choose)) {
-            printf(RED "\n  ⚠️  Invalid input! Please enter a number.\n" RESET);
+            printf(RED "\n  ! Invalid input! Please enter a number.\n" RESET);
             delay(1000);
             continue;
         }
@@ -174,7 +169,7 @@ int main() {
                 printStats(&stats);
             }
             printf(BOLD CYAN "\n  Final Score: %d\n", stats.totalScore);
-            printf("  Come back soon! 👋\n\n" RESET);
+            printf("  Come back soon!\n\n" RESET);
             break;
         }
         
@@ -188,7 +183,7 @@ int main() {
         }
         
         if (choose < 1 || choose > 5) {
-            printf(RED "\n  ⚠️  Invalid choice! Please select 1-5.\n" RESET);
+            printf(RED "\n  ! Invalid choice! Please select 1-5.\n" RESET);
             delay(1000);
             continue;
         }
@@ -208,7 +203,7 @@ int main() {
         random_number = min + rand() % (max - min + 1);
         
         printBanner();
-        printf(BOLD GREEN "\n  🎮 NEW GAME STARTED!\n" RESET);
+        printf(BOLD GREEN "\n  NEW GAME STARTED!\n" RESET);
         printf("  Guess the number between " CYAN "%d" RESET " and " CYAN "%d" RESET "\n", min, max);
         printf("  You have " YELLOW "%d" RESET " chances - Good luck!\n\n", chances);
         
@@ -218,14 +213,14 @@ int main() {
             printf(BOLD CYAN "  Attempt %d/%d - Your guess: " RESET, i + 1, chances);
             
             if (scanf("%d", &guess) != 1) {
-                printf(RED "  ⚠️  Invalid input! Please enter a number.\n" RESET);
+                printf(RED "  ! Invalid input! Please enter a number.\n" RESET);
                 getchar();
                 i--;
                 continue;
             }
             
             if (guess < min || guess > max) {
-                printf(RED "  ⚠️  Out of range! Enter between %d and %d\n" RESET, min, max);
+                printf(RED "  ! Out of range! Enter between %d and %d\n" RESET, min, max);
                 i--;
                 continue;
             }
@@ -233,10 +228,10 @@ int main() {
             if (guess == random_number) {
                 printBanner();
                 printf(GREEN "\n");
-                printf("  ╔═══════════════════════════════╗\n");
-                printf("  ║     🎉 CONGRATULATIONS! 🎉     ║\n");
-                printf("  ║    You guessed it right!      ║\n");
-                printf("  ╚═══════════════════════════════╝\n" RESET);
+                printf("  +===================================+\n");
+                printf("  |     CONGRATULATIONS!             |\n");
+                printf("  |    You guessed it right!        |\n");
+                printf("  +===================================+\n" RESET);
                 
                 celebratoryAnimation();
                 
@@ -258,10 +253,10 @@ int main() {
                 break;
             }
             else if (guess < random_number) {
-                printf(RED "  📉 Too LOW! Try higher!\n" RESET);
+                printf(RED "  Too LOW! Try higher!\n" RESET);
             }
             else {
-                printf(RED "  📈 Too HIGH! Try lower!\n" RESET);
+                printf(RED "  Too HIGH! Try lower!\n" RESET);
             }
             
             giveHint(guess, random_number, i, chances);
@@ -272,9 +267,9 @@ int main() {
         if (!won) {
             printBanner();
             printf(RED "\n");
-            printf("  ╔═══════════════════════════════╗\n");
-            printf("  ║      😢 GAME OVER! 😢        ║\n");
-            printf("  ╚═══════════════════════════════╝\n" RESET);
+            printf("  +===================================+\n");
+            printf("  |        GAME OVER!                |\n");
+            printf("  +===================================+\n" RESET);
             printf("\n");
             printf(BOLD "  The secret number was: " GREEN "%d\n\n" RESET, random_number);
             
